@@ -105,14 +105,14 @@ int main(void)
 	HAL_UART_Receive_IT(&huart2, uartRxBuffer, UART_RX_BUFFER_SIZE);
 	HAL_Delay(1);
 	shellInit();
-	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1 );
-	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2 );
-	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
 	while (1)
 	{
 		// SuperLoop inside the while(1), only flag changed from interrupt could launch functions
@@ -123,6 +123,8 @@ int main(void)
 			}
 			uartRxReceived = 0;
 		}
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -176,6 +178,14 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if (GPIO_Pin== BUTTON_Pin)
+	{
+		  motorPowerOn();
+	}
+
+}
 
 /* USER CODE END 4 */
 
