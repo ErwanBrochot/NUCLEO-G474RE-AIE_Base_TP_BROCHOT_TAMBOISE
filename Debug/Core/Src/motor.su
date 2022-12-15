@@ -1,3 +1,4 @@
 ../Core/Src/motor.c:19:6:motorPowerOn	16	static
 ../Core/Src/motor.c:41:6:motorPowerOff	8	static
 ../Core/Src/motor.c:50:6:motorSetSpeed	16	static
+../Core/Src/motor.c:60:6:setAlpha	16	static

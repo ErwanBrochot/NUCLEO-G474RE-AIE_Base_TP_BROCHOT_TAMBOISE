@@ -49,4 +49,16 @@ void motorPowerOff(void){
   */
 void motorSetSpeed(int speed){
 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin); // just for test, you can delete it
+
+}
+
+/**
+  * @brief  Set the dutyCycle
+  * @param  alpha : target alpha of the Transitors
+  * @retval None
+  */
+void setAlpha(float alpha)
+{
+	TIM1->CCR1=(int)(alpha*(TIM1->ARR));
+	TIM2->CCR2=(int)((1-alpha)*(TIM1->ARR));
 }

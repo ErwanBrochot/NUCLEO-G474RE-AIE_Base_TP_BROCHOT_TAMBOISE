@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020070  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00016fff  00000000  00000000  000200a0  2**0
+ 12 .debug_info   0001702c  00000000  00000000  000200a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002f72  00000000  00000000  0003709f  2**0
+ 13 .debug_abbrev 00002f8e  00000000  00000000  000370cc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000011e0  00000000  00000000  0003a018  2**3
+ 14 .debug_aranges 000011e8  00000000  00000000  0003a060  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00001098  00000000  00000000  0003b1f8  2**3
+ 15 .debug_ranges 000010a0  00000000  00000000  0003b248  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00028225  00000000  00000000  0003c290  2**0
+ 16 .debug_macro  00028225  00000000  00000000  0003c2e8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000162b7  00000000  00000000  000644b5  2**0
+ 17 .debug_line   000162f2  00000000  00000000  0006450d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000fd599  00000000  00000000  0007a76c  2**0
+ 18 .debug_str    000fd5ae  00000000  00000000  0007a7ff  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  00177d05  2**0
+ 19 .comment      00000050  00000000  00000000  00177dad  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000055ec  00000000  00000000  00177d58  2**2
+ 20 .debug_frame  00005614  00000000  00000000  00177e00  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -932,6 +932,7 @@ void motorSetSpeed(int speed){
  800088e:	2120      	movs	r1, #32
  8000890:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000894:	f001 f8fe 	bl	8001a94 <HAL_GPIO_TogglePin>
+
 }
  8000898:	bf00      	nop
  800089a:	3708      	adds	r7, #8
@@ -2225,9 +2226,9 @@ void MX_TIM1_Init(void)
  8000fc8:	4b45      	ldr	r3, [pc, #276]	; (80010e0 <MX_TIM1_Init+0x178>)
  8000fca:	2200      	movs	r2, #0
  8000fcc:	615a      	str	r2, [r3, #20]
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
  8000fce:	4b44      	ldr	r3, [pc, #272]	; (80010e0 <MX_TIM1_Init+0x178>)
- 8000fd0:	2200      	movs	r2, #0
+ 8000fd0:	2280      	movs	r2, #128	; 0x80
  8000fd2:	619a      	str	r2, [r3, #24]
   if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
  8000fd4:	4842      	ldr	r0, [pc, #264]	; (80010e0 <MX_TIM1_Init+0x178>)
@@ -2319,8 +2320,8 @@ void MX_TIM1_Init(void)
     Error_Handler();
  8001064:	f7ff fbcc 	bl	8000800 <Error_Handler>
   }
-  sConfigOC.Pulse = 1062;
- 8001068:	f240 4326 	movw	r3, #1062	; 0x426
+  sConfigOC.Pulse = 2655;
+ 8001068:	f640 235f 	movw	r3, #2655	; 0xa5f
  800106c:	63fb      	str	r3, [r7, #60]	; 0x3c
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
  800106e:	f107 0338 	add.w	r3, r7, #56	; 0x38
