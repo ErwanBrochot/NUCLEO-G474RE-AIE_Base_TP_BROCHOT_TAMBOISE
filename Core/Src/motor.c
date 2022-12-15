@@ -57,8 +57,8 @@ void motorSetSpeed(int speed){
   * @param  alpha : target alpha of the Transitors
   * @retval None
   */
-void setAlpha(float alpha)
+void setAlpha(int alpha)
 {
-	TIM1->CCR1=(int)(alpha*(TIM1->ARR));
-	TIM2->CCR2=(int)((1-alpha)*(TIM1->ARR));
+	TIM1->CCR1=alpha*(TIM1->ARR)/100;
+	TIM1->CCR2=(100-alpha)*(TIM1->ARR)/100;
 }
