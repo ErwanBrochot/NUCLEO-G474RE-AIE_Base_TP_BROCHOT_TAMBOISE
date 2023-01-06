@@ -150,6 +150,10 @@ void shellExec(void){
 			shellCmdNotFound();
 		}
 	}
+	else if (strcmp(argv[0],"measure")==0)
+	{
+		uartPrintADCValue();
+	}
 	else if(strcmp(argv[0],"help")==0)
 	{
 		HAL_UART_Transmit(&huart2, help, sizeof(help), HAL_MAX_DELAY);

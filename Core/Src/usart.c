@@ -21,10 +21,18 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include <stdio.h>
+#include "adc.h"
+
 uint8_t uartRxReceived;
 uint8_t uartRxBuffer[UART_RX_BUFFER_SIZE];
 uint8_t uartTxBuffer[UART_TX_BUFFER_SIZE];
 uint8_t stringSize;
+
+extern int adcDMAflag;
+extern float hallVoltageValue;
+extern float hallCurrentValue;
+extern float speed;
 
 /**
   * @brief  Function called at each new character received
@@ -153,5 +161,21 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+/*
+ *  Permet d'afficher la tension dans le capteur a effet hall et le courant dans le moteur
+ */
+void uartPrintADCValue(void)
+{
+	meanADCValue();
+	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
 
+}
+
+void uartPrintSpeed(void)
+{
+	meanADCValue();
+	sprintf(uartTxBuffer,"Speed: %.2f",speed);
+	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
+
+}
 /* USER CODE END 1 */
