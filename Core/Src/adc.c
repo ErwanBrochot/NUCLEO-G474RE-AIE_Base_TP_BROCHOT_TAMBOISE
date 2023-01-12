@@ -211,7 +211,6 @@ void meanADCValue (void)
 	int sum=0;
 	if (adcDMAflag==1)
 	{
-		adcDMAflag=0;
 		for (i=0; i<ADC_HALL_BUFFER; i=i+1)
 		{
 			sum=sum+ adcBuffer[i];

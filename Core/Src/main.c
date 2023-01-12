@@ -41,8 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define FREQ_ECH_SPEED 10
-#define NUMBER_OF_POINT 4096
+
 
 /* USER CODE END PD */
 
@@ -58,10 +57,14 @@
 extern uint8_t uartRxReceived;
 extern uint8_t uartRxBuffer[UART_RX_BUFFER_SIZE];
 extern uint8_t uartTxBuffer[UART_TX_BUFFER_SIZE];
-
 extern uint32_t adcBuffer[ADC_HALL_BUFFER];
 
 float speed=0.0;
+float consignCurrent = 0.0;
+
+extern int adcDMAflag;
+int codeurValue=0;
+int startFlag=0;
 
 
 
@@ -113,7 +116,7 @@ int main(void)
 	MX_ADC1_Init();
 	MX_TIM2_Init();
 	MX_TIM3_Init();
-	MX_TIM4_Init();
+	MX_TIM5_Init();
 	/* USER CODE BEGIN 2 */
 	HAL_UART_Receive_IT(&huart2, uartRxBuffer, UART_RX_BUFFER_SIZE);
 	HAL_Delay(1);
@@ -121,8 +124,8 @@ int main(void)
 	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
 	HAL_ADC_Start_DMA(&hadc1, adcBuffer, ADC_HALL_BUFFER);
 	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-	HAL_TIM_Base_Start_IT(&htim4);
-	TIM4->CNT=32767;
+	HAL_TIM_Base_Start_IT(&htim5);
+	TIM3->CNT=TIM3->ARR/2;
 	shellInit();
 
 
@@ -141,6 +144,13 @@ int main(void)
 				shellPrompt();
 			}
 			uartRxReceived = 0;
+		}
+		if (adcDMAflag)
+		{
+			if (startFlag){
+				asserCurrent();
+			}
+			adcDMAflag=0;
 		}
 
 
@@ -207,7 +217,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 
-
 /* USER CODE END 4 */
 
 /**
@@ -221,18 +230,16 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	/* USER CODE BEGIN Callback 0 */
-	int oldCodeurValue=0;
-	int codeurValue=0;
+
 
 	/* USER CODE END Callback 0 */
 	if (htim->Instance == TIM6) {
 		HAL_IncTick();
 	}
 	/* USER CODE BEGIN Callback 1 */
-	else if (htim->Instance == TIM4){
-		oldCodeurValue=codeurValue;
-		codeurValue= TIM4->CNT;
-		speed=(codeurValue-oldCodeurValue)*FREQ_ECH_SPEED*60/NUMBER_OF_POINT;
+	else if (htim->Instance == TIM5){
+		codeurValue= TIM3->CNT;
+		TIM3->CNT = TIM3->ARR/2;
 	}
 	/* USER CODE END Callback 1 */
 }

@@ -37,8 +37,8 @@ extern ADC_HandleTypeDef hadc1;
 /* USER CODE BEGIN Private defines */
 #define ADC_HALL_BUFFER 10
 #define VOLTAGE_HALL_OC 2.5
-#define OFFSET_DEFAULT_ADC 0.25
-#define HALL_GAIN 12
+#define OFFSET_DEFAULT_ADC -0.3/12
+#define HALL_GAIN 12*3/3.5
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);

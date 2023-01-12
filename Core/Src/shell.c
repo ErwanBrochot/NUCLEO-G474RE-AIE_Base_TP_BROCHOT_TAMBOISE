@@ -60,6 +60,7 @@ uint8_t	argc;
 extern uint8_t uartTxBuffer[UART_TX_BUFFER_SIZE];
 extern uint8_t stringSize;
 
+extern float consignCurrent;
 
 
 /**
@@ -146,13 +147,23 @@ void shellExec(void){
 		else if(strcmp(argv[1],"alpha")==0){
 			setAlpha(atoi(argv[2]));
 		}
+		else if(strcmp(argv[1],"current")==0){
+					consignCurrent=(atof(argv[2]));
+
+				}
 		else{
 			shellCmdNotFound();
 		}
 	}
 	else if (strcmp(argv[0],"measure")==0)
 	{
-		uartPrintADCValue();
+		if(strcmp(argv[1],"current")==0){
+			uartPrintADCValue();
+		}
+		else if (strcmp(argv[1],"speed")==0){
+			uartPrintSpeed();
+		}
+
 	}
 	else if(strcmp(argv[0],"help")==0)
 	{

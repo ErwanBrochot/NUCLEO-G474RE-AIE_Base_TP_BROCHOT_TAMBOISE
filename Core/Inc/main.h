@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -69,7 +69,13 @@ void Error_Handler(void);
 #define T_SWCLK_Pin GPIO_PIN_14
 #define T_SWCLK_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
+#define FREQ_SYST 170000000
+#define FREQ_ECH_SPEED FREQ_SYST / TIM5->ARR
+#define NUMBER_OF_POINT 4096
 
+#define Kp 0.0002
+#define Ki 3
+#define Te 1/16000.0
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

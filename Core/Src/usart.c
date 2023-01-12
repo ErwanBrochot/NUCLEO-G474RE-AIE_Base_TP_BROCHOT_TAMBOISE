@@ -33,6 +33,7 @@ extern int adcDMAflag;
 extern float hallVoltageValue;
 extern float hallCurrentValue;
 extern float speed;
+extern int codeurValue;
 
 /**
   * @brief  Function called at each new character received
@@ -167,14 +168,15 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 void uartPrintADCValue(void)
 {
 	meanADCValue();
+	sprintf(uartTxBuffer,"Current: %.2f A\r\n",hallCurrentValue);
 	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
 
 }
 
 void uartPrintSpeed(void)
 {
-	meanADCValue();
-	sprintf(uartTxBuffer,"Speed: %.2f",speed);
+	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
+	sprintf(uartTxBuffer,"Speed: %.2f tr/min\r\n",speed);
 	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
 
 }
