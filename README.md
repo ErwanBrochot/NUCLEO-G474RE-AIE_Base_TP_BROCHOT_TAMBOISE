@@ -65,6 +65,18 @@ Nos PWM sont bien a 16KHz et complémentaires.
 
 Il y'as bien un temps mort de 2us entre chaques commutations.
 
+### Prise en main de hacheur
+
+Ce hacheur comporte 3 bras de ponts, nous n'en utiliserons que 2 pour commander notre MCC. Nous avons décidé de prendre les bras Yellow et Red car ils sont tout deux munis de capteur a effet Hall contrairement au troisième bras de pont.
+
+En suivant la datasheet du hacheur et les pins utilisés sur notre Nucléo. Nous avons établi les connections de telle manière:
+
+|Signal|Pin STM32|Pin hacheur|Correspondance hacheur
+-----------------------------------------------------
+|TIM1_CH1|PA8|Pin 12|CM_Y_TOP|
+-------------------------------
+
+
 
 ## Authors
 
