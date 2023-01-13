@@ -42,18 +42,26 @@ L'hologe du système est de 170 MHz et on souhaite un timer d'une fréquence de
 16 kHz. On va donc avoir un ARR=170x10^6/16x10^3-1=10624. Comme le Timer est réglé
 en center align, on divise cette valeur par 2 ce qui fait que ARR=5311.
 
+##### Counter setting
 ![Counter setting](./Images/TIM1_param.png "Counter setting")
 
+##### Deadtime setting
+
 ![Dead time](./Images/TIM_DeadTime.png "deadtime setting")
+
+##### PWM setting
 
 ![PWM setting](./Images/TIM1_PWM.png "PWM setting")
 
 #### Observation a l'oscilloscope
-![Oscillo_PWM](./Images/Ocsillo_PWM.png "PWM affichés à l'oscilloscope")
+
+#####Observations
+
+![Oscillo PWM](./Images/Oscillo_PWM.png "PWM affichés à l'oscilloscope")
 
 Nos PWM sont bien a 16KHz et complémentaires.
 
-![Oscillo_DeadTime](./Images/Ocsillo_temps_mort.png "Temps mort")
+![Oscillo DeadTime](./Images/Oscillo_temps_mort.png "Temps mort")
 
 Il y'as bien un temps mort de 2us entre chaques commutations.
 
