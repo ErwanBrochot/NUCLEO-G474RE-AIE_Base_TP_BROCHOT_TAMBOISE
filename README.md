@@ -43,7 +43,9 @@ L'hologe du système est de 170 MHz et on souhaite un timer d'une fréquence de
 en center align, on divise cette valeur par 2 ce qui fait que ARR=5311.
 
 ![Counter setting](./Images/TIM1_param.png "Counter setting")
-![Dead time](./Images/TIM1_DeadTime.png "Counter setting")
+
+![Dead time](./Images/TIM1_DeadTime.png "deadtime setting")
+
 ![PWM setting](./Images/TIM1_PWM.png "PWM setting")
 
 
