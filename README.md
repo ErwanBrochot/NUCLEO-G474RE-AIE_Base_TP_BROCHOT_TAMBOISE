@@ -184,6 +184,20 @@ Pour effectuer le test, nous avons utilisé un oscilloscope en mode single trigg
 
 Nous observons ici que notre temps mort est de plus de 2us, nous respectons donc le cahier des charges.
 
+###Commande setAlpha
+
+Cette fonction nous permet de régler directement la valeur de alpha entrant dans le commandShell "set alpha " suivi d'un entier compris entre 0 et 100. A l'initialisation alpha vaut 50, ce qui correspond à une vitesse nulle:
+
+```c
+void setAlpha(int alpha1)
+{
+	TIM1->CCR1=alpha1*(TIM1->ARR)/100;
+	TIM1->CCR2=(100-alpha1)*(TIM1->ARR)/100;
+}
+```
+
+Cette foonction est l'une des plus importante de notre code, elle est utilisée à la fin de notre boucle d'asservissement pour régler le alpha.
+
 ## Capteur de courant et position
 
 ### Mesure de courant 
@@ -251,6 +265,8 @@ Pour mesurer la vitesse, nous allons utiliser les roues codeuses présentent sur
 
 Nous allons utiliser le Timer3 en mode counter pour compter les incréments sur les roues codeuses. Nous utiliserons le Timer5 pour venir récupérer la valeur du codeur à une fréquence de 10Hz
 
+Nous devons penser à initialiser le compteur de TIM3 à son point milieu pour éviter que la vitesse fasse un bond si le moteur passe en marche arrière ce qui ferai passer le compteur de 0 a 65535.
+
 #### Paramètres des Timers
 ##### Timer 3: Mode Counter
 
@@ -260,7 +276,196 @@ Nous allons utiliser le Timer3 en mode counter pour compter les incréments sur 
 
 ![Counter setting](./Images/TIM5_param.png "TIM5 setting")
 
+#### Fonctions de calcul de la vitesse
 
+Nous devons d'abord traiter l'interruption envoyée par TIM5, nous utlisons pour cela la fonction HAL_TIM_PeriodElapsedCallBack:
+```c
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	/* USER CODE BEGIN Callback 0 */
+
+
+	/* USER CODE END Callback 0 */
+	if (htim->Instance == TIM6) {
+		HAL_IncTick();
+	}
+	/* USER CODE BEGIN Callback 1 */
+	else if (htim->Instance == TIM5){
+		codeurValue= TIM3->CNT;
+		TIM3->CNT = TIM3->ARR/2;
+	}
+	/* USER CODE END Callback 1 */
+}
+```
+Dans cette fonction nous recuperons la valeur du compteur de TIM3 et nous le remettons à son point milieu pour la prochaine mesure.
+
+Nous devons maintenant calculer la vitesse a partir des valeurs mesurées, pour se faire nous avons créé la fonction calcSpeed:
+
+```c
+void calcSpeed (void){
+	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
+}
+```
+
+Nous avons aussi une fonction qui nous permet d'afficher la vitesse sur le commandSheel quand on entre "measure speed":
+
+```c
+void uartPrintSpeed(void)
+{
+	calcSpeed();
+	sprintf(uartTxBuffer,"Speed: %.2f tr/min\r\n",speed);
+	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
+
+}
+```
+##Asservissement
+
+Maintenant que nous reussissons  a mesure le courant et la vitesse, nous allons effectuer un asservissement en courant puis en vitesse.
+
+### Asservissement en courant
+
+Nous allons utiliser une régulation PI parrallèle pour mettre en place notre asservissement en courant. Pour se faire, nous devons calculer notre commande selon le gain proportionnel et notre commande selon le gain intégral. Nous devons veiller a ce que notre commande ne dépasse pas 1 et que l'intégrale prenne en compte l'anti-windup.
+
+```c
+void asserCurrent (void)
+{
+	meanADCValue();
+
+	float eps= consignCurrent - hallCurrentValue;
+
+	// Proportional part
+	if (Kp*eps < 0){
+		alphaKp=0.0;
+	}
+	else if (Kp*eps > 1) {
+		alphaKp=1.0;
+	}
+	else {
+		alphaKp=eps*(float)Kp;
+	}
+
+	// Integral part
+
+	alphaKi=alphaKiOld+((Ki*Te)/2)*(eps+epsOld);
+	if (alphaKi < 0){
+		alphaKi=0.0;
+	}
+	else if (alphaKi > 1) {
+		alphaKi=1.0;
+	}
+
+	alphaKiOld=alphaKi;
+	epsOld=eps;
+
+	// Summ of the two coeff
+
+	alpha=(int)((alphaKi+alphaKp)*100);
+
+	if (alpha < 0){
+		alpha=0;
+	}
+	else if (alpha > 100) {
+		alpha=100;
+	}
+	setAlpha(alpha);
+
+}
+```
+Nous devons aussi modifier certaines autres fonctions pour que notre asservissement ne démarre pas avant que la fonction motorPowerOn soit enclenché, on ajoute donc un startFlag qui permet de démarrer notre asservissement.
+
+```c
+void motorPowerOn(void){
+	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin); // just for test, you can delete it
+	//Phase de démarage//
+	HAL_GPIO_WritePin(ISO_RESET_GPIO_Port, ISO_RESET_Pin,GPIO_PIN_SET );
+	setAlpha(50);
+	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1 );
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2 );
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+
+
+	int i=0;
+	while (i<33)
+	{
+		i++;
+	}
+	HAL_GPIO_WritePin(ISO_RESET_GPIO_Port, ISO_RESET_Pin, GPIO_PIN_RESET);
+
+	consignCurrent=0;
+	startFlag=1;
+	alphaKiOld=0.5;
+	epsOld=0;
+
+
+}
+```
+Quand le startflag est à 1, nous passons par la fonction asserCurrent dans notre Superloop.
+
+Il a fallu aussi ajouter un commande au Shell pour pouvoir entre la valeur de courant souhaité, voici notre nouvelle fonction shellExec:
+
+```c
+void shellExec(void){
+	if(strcmp(argv[0],"set")==0){
+		if(strcmp(argv[1],"PA5")==0 && ((strcmp(argv[2],"0")==0)||(strcmp(argv[2],"1")==0)) ){
+			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, atoi(argv[2]));
+			stringSize = snprintf((char*)uartTxBuffer,UART_TX_BUFFER_SIZE,"Switch on/off led : %d\r\n",atoi(argv[2]));
+			HAL_UART_Transmit(&huart2, uartTxBuffer, stringSize, HAL_MAX_DELAY);
+		}
+		else if(strcmp(argv[1],"speed")==0){
+			if(atoi(argv[2])==0 && strcmp(argv[2],"0")!=0){
+				HAL_UART_Transmit(&huart2, motorSpeedInst, sizeof(motorSpeedInst), HAL_MAX_DELAY);
+			}
+			else{
+				motorSetSpeed(atoi(argv[2]));
+			}
+		}
+		else if(strcmp(argv[1],"alpha")==0){
+			setAlpha(atoi(argv[2]));
+		}
+		else if(strcmp(argv[1],"current")==0){
+					consignCurrent=(atof(argv[2]));
+
+				}
+		else{
+			shellCmdNotFound();
+		}
+	}
+	else if (strcmp(argv[0],"measure")==0)
+	{
+		if(strcmp(argv[1],"current")==0){
+			uartPrintADCValue();
+		}
+		else if (strcmp(argv[1],"speed")==0){
+			uartPrintSpeed();
+		}
+
+	}
+	else if(strcmp(argv[0],"help")==0)
+	{
+		HAL_UART_Transmit(&huart2, help, sizeof(help), HAL_MAX_DELAY);
+	}
+	else if(strcmp(argv[0],"pinout")==0)
+	{
+		HAL_UART_Transmit(&huart2, pinout, sizeof(pinout), HAL_MAX_DELAY);
+	}
+	else if((strcmp(argv[0],"power")==0)&&(strcmp(argv[1],"on")==0))
+	{
+		HAL_UART_Transmit(&huart2, powerOn, sizeof(powerOn), HAL_MAX_DELAY);
+		motorPowerOn();
+	}
+	else if((strcmp(argv[0],"power")==0)&&(strcmp(argv[1],"off")==0))
+	{
+		HAL_UART_Transmit(&huart2, powerOff, sizeof(powerOff), HAL_MAX_DELAY);
+		motorPowerOff();
+	}
+	else{
+		shellCmdNotFound();
+	}
+}
+```
+
+Avec cette modification, nous pouvons régler le courant souhaité via la commande set current suivit de la valeur de type float souhaitée.
 ## Author
 
 - [@Erwan Brochot](https://github.com/ErwanBrochot/)

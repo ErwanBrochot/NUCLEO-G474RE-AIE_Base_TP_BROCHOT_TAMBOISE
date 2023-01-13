@@ -24,6 +24,8 @@ float alphaKiOld=0.5;
 int alpha=50;
 float eps=0.0;
 float epsOld=0.0;
+extern float speed;
+extern int codeurValue;
 
 /**
  * @brief  Switch on the motor driver
@@ -132,4 +134,8 @@ void asserCurrent (void)
 	}
 	setAlpha(alpha);
 
+}
+
+void calcSpeed (void){
+	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
 }

@@ -23,6 +23,7 @@
 /* USER CODE BEGIN 0 */
 #include <stdio.h>
 #include "adc.h"
+#include "motor.h"
 
 uint8_t uartRxReceived;
 uint8_t uartRxBuffer[UART_RX_BUFFER_SIZE];
@@ -178,7 +179,7 @@ void uartPrintADCValue(void)
  */
 void uartPrintSpeed(void)
 {
-	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
+	calcSpeed();
 	sprintf(uartTxBuffer,"Speed: %.2f tr/min\r\n",speed);
 	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
 

@@ -15,5 +15,6 @@ void motorPowerOff(void);
 void motorSetSpeed(int speed);
 void setAlpha(int alpha);
 void asserCurrent (void);
+void calcSpeed (void);
 
 #endif /* INC_MOTOR_H_ */
