@@ -38,7 +38,7 @@ Générer quatre PWM à partir du Timer 1 pour controler le hacheur.
 - Résolution minimum : 10bits.
 
 #### Reglage du Timer 1
-![TIM1 Counter setting]([Tim1_Setting](https://github.com/ErwanBrochot/NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE/blob/main/Images/TIM1_param.png ?raw=true "TIM1 Counter setting")
+![TIM1 Counter setting]([Tim1_Setting](https://github.com/ErwanBrochot/NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE/blob/main/Images/TIM1_param.png ?raw=true)
 
 
 ## Authors
