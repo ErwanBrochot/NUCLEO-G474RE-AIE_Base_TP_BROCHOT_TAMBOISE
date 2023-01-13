@@ -38,7 +38,13 @@ Générer quatre PWM à partir du Timer 1 pour controler le hacheur.
 - Résolution minimum : 10bits.
 
 #### Reglage du Timer 1
-![Counter setting](./Images/TIM1_param.png)
+L'hologe du système est de 170 MHz et on souhaite un timer d'une fréquence de
+16 kHz. On va donc avoir un ARR=170x10^6/16x10^3-1=10624. Comme le Timer est réglé
+en center align, on divise cette valeur par 2 ce qui fait que ARR=5311.
+
+![Counter setting](./Images/TIM1_param.png "Counter setting")
+![Dead time](./Images/TIM1_DeadTime.png "Counter setting")
+![PWM setting](./Images/TIM1_PWM.png "PWM setting")
 
 
 ## Authors
