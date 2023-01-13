@@ -38,7 +38,7 @@ Générer quatre PWM à partir du Timer 1 pour controler le hacheur.
 - Résolution minimum : 10bits.
 
 #### Reglage du Timer 1
-[image](./Images/TIM1_param.png)
+![Counter setting](./Images/TIM1_param.png)
 
 
 ## Authors
