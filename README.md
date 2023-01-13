@@ -178,9 +178,23 @@ void shellExec(void){
 
 #### Test de la fonction
 
-Pour effectuer le test, nous avons utiliser un oscilloscope en mode single trigger pour mesurer la longeur de l'impulsion:
+Pour effectuer le test, nous avons utilisé un oscilloscope en mode single trigger pour mesurer la longeur de l'impulsion:
 
 ![Oscillo ISO_RESET](./Images/Oscillo_ISO_RESET.png "Impulsion sur ISO_RESET")
+
+Nous observons ici que notre temps mort est de plus de 2us, nous respectons donc le cahier des charges.
+
+## Capteur de courant et position
+
+### Mesure de courant 
+
+Pour mesurer le courant nous allons utiliser un ADC en mode DMA qui sera connecté a un des capteurs à effet Hall présent sur le hacheur. L'ADC sera cadencé par le Timer 2 qui aura une fréquence de 16kHz. Le DMA remplira un Buffer de 10 valeur et nous ferons la moyenne du courant sur ces 10 valeurs pour avoir notre courant moyen. Cette démarche évite de prendre une mesure de courant erronées, car le courant passant dans le moteur comporte de très grandes variations ,et celles-ci pourront nous géner lors de notre asservissement.
+
+#### Paramètres ADC
+
+![ADC setting1](./Images/ADC_param.png "Paramètres de l'ADC")
+![ADC setting2](./Images/ADC_param1.png "Paramètres de l'ADC")
+
 
 ## Author
 
