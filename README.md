@@ -83,6 +83,8 @@ En suivant la datasheet du hacheur et les pins utilisés sur notre Nucléo. Nous
 
 En s'appuyant sur la datasheet, nous avons codé une fonction qui permet d'intialiser le hacheur en envoyant une impulsion d' au moins 2us. Cette fonction se lance si on entre "power on" dans le Shell ou si on appuie sur le bouton bleu de la Nucleo.
 
+#### Detail de la fonction
+
 ```c
 void motorPowerOn(void){
 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin); // just for test, you can delete it
@@ -105,8 +107,82 @@ void motorPowerOn(void){
 }
 ```
 
+Cette fonction commence par mettre le port de ISO_RESET a 1, elle va ensuite initialiser le Timer1 et enfin elle va tourner 34 fois dans une boucle ce qui représente environ 2us avant de remmtre le port ISO_RESET à 0.
 
-## Authors
+Afin d'entrer dans cette fonctions grâce à l'appuie sur le bouton bleu, nous traitons les interruptions venant des GPIO:
+
+```c
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if (GPIO_Pin== BUTTON_Pin)
+	{
+		motorPowerOn();
+	}
+
+}
+```
+
+Pour entrer dans la fonction en utilisant le commandShell, nous avons modifié la fonction shellExec pour que la commande power on nous fasse entrer dans motorPowerOn:
+
+```c
+void shellExec(void){
+	if(strcmp(argv[0],"set")==0){
+		if(strcmp(argv[1],"PA5")==0 && ((strcmp(argv[2],"0")==0)||(strcmp(argv[2],"1")==0)) ){
+			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, atoi(argv[2]));
+			stringSize = snprintf((char*)uartTxBuffer,UART_TX_BUFFER_SIZE,"Switch on/off led : %d\r\n",atoi(argv[2]));
+			HAL_UART_Transmit(&huart2, uartTxBuffer, stringSize, HAL_MAX_DELAY);
+		}
+		else if(strcmp(argv[1],"speed")==0){
+			if(atoi(argv[2])==0 && strcmp(argv[2],"0")!=0){
+				HAL_UART_Transmit(&huart2, motorSpeedInst, sizeof(motorSpeedInst), HAL_MAX_DELAY);
+			}
+			else{
+				motorSetSpeed(atoi(argv[2]));
+			}
+		}
+		else if(strcmp(argv[1],"alpha")==0){
+			setAlpha(atoi(argv[2]));
+		}
+		else if(strcmp(argv[1],"current")==0){
+					consignCurrent=(atof(argv[2]));
+
+				}
+		else{
+			shellCmdNotFound();
+		}
+	}
+
+	else if(strcmp(argv[0],"help")==0)
+	{
+		HAL_UART_Transmit(&huart2, help, sizeof(help), HAL_MAX_DELAY);
+	}
+	else if(strcmp(argv[0],"pinout")==0)
+	{
+		HAL_UART_Transmit(&huart2, pinout, sizeof(pinout), HAL_MAX_DELAY);
+	}
+	else if((strcmp(argv[0],"power")==0)&&(strcmp(argv[1],"on")==0))
+	{
+		HAL_UART_Transmit(&huart2, powerOn, sizeof(powerOn), HAL_MAX_DELAY);
+		motorPowerOn();
+	}
+	else if((strcmp(argv[0],"power")==0)&&(strcmp(argv[1],"off")==0))
+	{
+		HAL_UART_Transmit(&huart2, powerOff, sizeof(powerOff), HAL_MAX_DELAY);
+		motorPowerOff();
+	}
+	else{
+		shellCmdNotFound();
+	}
+}
+```
+
+#### Test de la fonction
+
+Pour effectuer le test, nous avons utiliser un oscilloscope en mode single trigger pour mesurer la longeur de l'impulsion:
+
+![Oscillo ISO_RESET](./Images/Oscillo_ISO_RESET.png "Impulsion sur ISO_RESET")
+
+## Author
 
 - [@Erwan Brochot](https://github.com/ErwanBrochot/)
 
