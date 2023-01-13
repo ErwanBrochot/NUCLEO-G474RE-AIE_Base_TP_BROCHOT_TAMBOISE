@@ -27,9 +27,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000201e8  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0001d545  00000000  00000000  00020218  2**0
+ 12 .debug_info   0001d547  00000000  00000000  00020218  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000391c  00000000  00000000  0003d75d  2**0
+ 13 .debug_abbrev 0000391c  00000000  00000000  0003d75f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_aranges 000016a0  00000000  00000000  00041080  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -1667,9 +1667,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
  800125c:	40020008 	.word	0x40020008
 
 08001260 <HAL_ADC_ConvCpltCallback>:
-/*
- * void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
- * Met le flag a 1 quand le buffer est remli
+
+/**
+ * Change the value of the dmaFlag to high level when the ADC buffer is full
  */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
@@ -1701,9 +1701,9 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
  800128c:	00000000 	.word	0x00000000
 
 08001290 <meanADCValue>:
- * OFFSET_DEFAULT_ADC: A définir dans adc.h pour compenser une erreur d'offset dans l'ADC
- * HALL_GAIN: défini dans adc.h selon la datasheet du convertisseur.
- * VOLTAGE_HALL_OC: Tension dans le hall en circuit ouvert, définit dans adc.h selon la datasheet du convertisseur
+/**
+ * @brief Make the mean of the current value stocked in the buffer and stock it in the hallCurrentValue variable
+ * @note use the command "measure current" on the commandshell to display the current value
  */
 void meanADCValue (void)
 {
@@ -2280,8 +2280,10 @@ void SystemClock_Config(void)
  8001660:	bd80      	pop	{r7, pc}
 
 08001662 <HAL_GPIO_EXTI_Callback>:
-
 /* USER CODE BEGIN 4 */
+/**
+ * @brief Use the interruption on the blue Button to lunch the power module according to the datasheet
+ */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
  8001662:	b580      	push	{r7, lr}
@@ -2305,7 +2307,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  800167e:	bd80      	pop	{r7, pc}
 
 08001680 <HAL_TIM_PeriodElapsedCallback>:
- * a global variable "uwTick" used as application time base.
+ * HAL_TIM_IRQHandler(). It makes a measure of the incremental encoder wired to TIM3 and put the counter on the middle value for the next measure
  * @param  htim : TIM handle
  * @retval None
  */
@@ -2570,9 +2572,9 @@ void setAlpha(int alpha1)
  80017fc:	51eb851f 	.word	0x51eb851f
 
 08001800 <asserCurrent>:
-
 /**
- * @brief Set the duty cycle thanks to a PI regulation to match with the wanted value. It use a parallel PI regulation
+ * @brief Set the duty cycle thanks to a PI regulation to match with the wanted value.
+ * It use a parallel PI regulation
  */
 void asserCurrent (void)
 {
@@ -2986,9 +2988,9 @@ uint8_t shellGetChar(void){
  8001b0c:	20000364 	.word	0x20000364
 
 08001b10 <shellExec>:
-
-/**
-  * @brief  Call function depends of the value of argc and argv
+  * use the "set current" command to set the current value that you want.
+  * use the "measure current [float]" command to display the current value.
+  * use the "measure speed" commande to display the speed of the motor.
   * @retval None
   */
 void shellExec(void){
@@ -5227,8 +5229,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
 080027cc <uartPrintADCValue>:
 /* USER CODE BEGIN 1 */
-/*
- *  Permet d'afficher la tension dans le capteur a effet hall et le courant dans le moteur
+/**
+ *  @brief Allow to display the current value of the motor using the USART bus
  */
 void uartPrintADCValue(void)
 {
@@ -5264,6 +5266,9 @@ void uartPrintADCValue(void)
 
 08002810 <uartPrintSpeed>:
 
+/**
+ *  @brief Allow to display the speed value of the motor using the USART bus
+ */
 void uartPrintSpeed(void)
 {
  8002810:	b5b0      	push	{r4, r5, r7, lr}

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TP_AEI_BROCHOT_TAMBOISE: Core/Src/usart.c File Reference</title>
+<title>TP COmmande Numérique Directe: NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE/Core/Src/usart.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TP_AEI_BROCHOT_TAMBOISE
+   <div id="projectname">TP COmmande Numérique Directe
    </div>
   </td>
  </tr>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c6310732a22f63c0c2fc5595561e68f1.html">Core</a></li><li class="navelem"><a class="el" href="dir_b596f468b52957496e4f78b80e029268.html">Src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_f80a2127d588fbbfca71bdf36773afca.html">NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE</a></li><li class="navelem"><a class="el" href="dir_711d93e8e55d9d68533e0a8498104afd.html">Core</a></li><li class="navelem"><a class="el" href="dir_1a23918a3edf12c5b08eb73a089c686d.html">Src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -83,19 +83,29 @@ $(function() {
 <p>This file provides code for the configuration of the USART instances.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="usart_8h_source.html">usart.h</a>&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="adc_8h_source.html">adc.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae494a9643f29b87d6d81e5264e60e57b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="usart_8c.html#ae494a9643f29b87d6d81e5264e60e57b">HAL_UART_RxCpltCallback</a> (UART_HandleTypeDef *huart)</td></tr>
-<tr class="memdesc:ae494a9643f29b87d6d81e5264e60e57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function called at each new character received.  <a href="usart_8c.html#ae494a9643f29b87d6d81e5264e60e57b">More...</a><br /></td></tr>
-<tr class="separator:ae494a9643f29b87d6d81e5264e60e57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae494a9643f29b87d6d81e5264e60e57b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___exported___functions___group2.html#gae494a9643f29b87d6d81e5264e60e57b">HAL_UART_RxCpltCallback</a> (<a class="el" href="group___u_a_r_t___exported___types.html#ga5de4a49eb132735325e706f406c69d6e">UART_HandleTypeDef</a> *huart)</td></tr>
+<tr class="memdesc:gae494a9643f29b87d6d81e5264e60e57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function called at each new character received.  <a href="group___u_a_r_t___exported___functions___group2.html#gae494a9643f29b87d6d81e5264e60e57b">More...</a><br /></td></tr>
+<tr class="separator:gae494a9643f29b87d6d81e5264e60e57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a052088fe5bb3f807a4b2502e664fd4fd"><td class="memItemLeft" align="right" valign="top"><a id="a052088fe5bb3f807a4b2502e664fd4fd" name="a052088fe5bb3f807a4b2502e664fd4fd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>MX_USART2_UART_Init</b> (void)</td></tr>
 <tr class="separator:a052088fe5bb3f807a4b2502e664fd4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62a25476866998c7aadfb5c0864fa349"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="usart_8c.html#a62a25476866998c7aadfb5c0864fa349">HAL_UART_MspInit</a> (UART_HandleTypeDef *uartHandle)</td></tr>
-<tr class="separator:a62a25476866998c7aadfb5c0864fa349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94cd2c58add4f2549895a03bf267622e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="usart_8c.html#a94cd2c58add4f2549895a03bf267622e">HAL_UART_MspDeInit</a> (UART_HandleTypeDef *uartHandle)</td></tr>
-<tr class="separator:a94cd2c58add4f2549895a03bf267622e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e553b32211877322f949b14801bbfa7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___exported___functions___group1.html#ga0e553b32211877322f949b14801bbfa7">HAL_UART_MspInit</a> (<a class="el" href="group___u_a_r_t___exported___types.html#ga5de4a49eb132735325e706f406c69d6e">UART_HandleTypeDef</a> *uartHandle)</td></tr>
+<tr class="separator:ga0e553b32211877322f949b14801bbfa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga718f39804e3b910d738a0e1e46151188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___exported___functions___group1.html#ga718f39804e3b910d738a0e1e46151188">HAL_UART_MspDeInit</a> (<a class="el" href="group___u_a_r_t___exported___types.html#ga5de4a49eb132735325e706f406c69d6e">UART_HandleTypeDef</a> *uartHandle)</td></tr>
+<tr class="separator:ga718f39804e3b910d738a0e1e46151188"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87d18aaef58c13918534ec7ede396b15"><td class="memItemLeft" align="right" valign="top"><a id="a87d18aaef58c13918534ec7ede396b15" name="a87d18aaef58c13918534ec7ede396b15"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>uartPrintADCValue</b> (void)</td></tr>
+<tr class="memdesc:a87d18aaef58c13918534ec7ede396b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allow to display the current value of the motor using the USART bus. <br /></td></tr>
+<tr class="separator:a87d18aaef58c13918534ec7ede396b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe00133db62c3ee3b002d03e9c61bcda"><td class="memItemLeft" align="right" valign="top"><a id="abe00133db62c3ee3b002d03e9c61bcda" name="abe00133db62c3ee3b002d03e9c61bcda"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>uartPrintSpeed</b> (void)</td></tr>
+<tr class="memdesc:abe00133db62c3ee3b002d03e9c61bcda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allow to display the speed value of the motor using the USART bus. <br /></td></tr>
+<tr class="separator:abe00133db62c3ee3b002d03e9c61bcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -111,8 +121,23 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>uartTxBuffer</b> [
 <tr class="memitem:a8c4373ebb19a7d1e6c4a05948c5ad7ca"><td class="memItemLeft" align="right" valign="top"><a id="a8c4373ebb19a7d1e6c4a05948c5ad7ca" name="a8c4373ebb19a7d1e6c4a05948c5ad7ca"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>stringSize</b></td></tr>
 <tr class="separator:a8c4373ebb19a7d1e6c4a05948c5ad7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac8e60a1e4ff61d666d91b3343597145"><td class="memItemLeft" align="right" valign="top"><a id="aac8e60a1e4ff61d666d91b3343597145" name="aac8e60a1e4ff61d666d91b3343597145"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>adcDMAflag</b></td></tr>
+<tr class="separator:aac8e60a1e4ff61d666d91b3343597145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0606184b4c86ba819e185d34af3e921"><td class="memItemLeft" align="right" valign="top"><a id="ac0606184b4c86ba819e185d34af3e921" name="ac0606184b4c86ba819e185d34af3e921"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>hallVoltageValue</b></td></tr>
+<tr class="separator:ac0606184b4c86ba819e185d34af3e921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaffc02016fb81cb85288a49da61c094"><td class="memItemLeft" align="right" valign="top"><a id="abaffc02016fb81cb85288a49da61c094" name="abaffc02016fb81cb85288a49da61c094"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>hallCurrentValue</b></td></tr>
+<tr class="separator:abaffc02016fb81cb85288a49da61c094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f7e4724cf57d59513b39c5ecc81adc8"><td class="memItemLeft" align="right" valign="top"><a id="a7f7e4724cf57d59513b39c5ecc81adc8" name="a7f7e4724cf57d59513b39c5ecc81adc8"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>speed</b></td></tr>
+<tr class="separator:a7f7e4724cf57d59513b39c5ecc81adc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7e3eb2a4c60c8ebc3f218c0f293a519"><td class="memItemLeft" align="right" valign="top"><a id="ae7e3eb2a4c60c8ebc3f218c0f293a519" name="ae7e3eb2a4c60c8ebc3f218c0f293a519"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>codeurValue</b></td></tr>
+<tr class="separator:ae7e3eb2a4c60c8ebc3f218c0f293a519"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9479c261d65eecedd3d9582f7f0f89c"><td class="memItemLeft" align="right" valign="top"><a id="aa9479c261d65eecedd3d9582f7f0f89c" name="aa9479c261d65eecedd3d9582f7f0f89c"></a>
-UART_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><b>huart2</b></td></tr>
+<a class="el" href="group___u_a_r_t___exported___types.html#ga5de4a49eb132735325e706f406c69d6e">UART_HandleTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><b>huart2</b></td></tr>
 <tr class="separator:aa9479c261d65eecedd3d9582f7f0f89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -120,73 +145,7 @@ UART_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><b>huart2<
 <dl class="section attention"><dt>Attention</dt><dd></dd></dl>
 <p>Copyright (c) 2022 STMicroelectronics. All rights reserved.</p>
 <p >This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-IS. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a94cd2c58add4f2549895a03bf267622e" name="a94cd2c58add4f2549895a03bf267622e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94cd2c58add4f2549895a03bf267622e">&#9670;&#160;</a></span>HAL_UART_MspDeInit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void HAL_UART_MspDeInit </td>
-          <td>(</td>
-          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>uartHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >USART2 GPIO Configuration PA2 ---&mdash;&gt; USART2_TX PA3 ---&mdash;&gt; USART2_RX</p>
-
-</div>
-</div>
-<a id="a62a25476866998c7aadfb5c0864fa349" name="a62a25476866998c7aadfb5c0864fa349"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62a25476866998c7aadfb5c0864fa349">&#9670;&#160;</a></span>HAL_UART_MspInit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void HAL_UART_MspInit </td>
-          <td>(</td>
-          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>uartHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Initializes the peripherals clocks</p>
-<p >USART2 GPIO Configuration PA2 ---&mdash;&gt; USART2_TX PA3 ---&mdash;&gt; USART2_RX</p>
-
-</div>
-</div>
-<a id="ae494a9643f29b87d6d81e5264e60e57b" name="ae494a9643f29b87d6d81e5264e60e57b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae494a9643f29b87d6d81e5264e60e57b">&#9670;&#160;</a></span>HAL_UART_RxCpltCallback()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void HAL_UART_RxCpltCallback </td>
-          <td>(</td>
-          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>huart</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function called at each new character received. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5

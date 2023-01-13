@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TP_AEI_BROCHOT_TAMBOISE: Core/Inc/main.h File Reference</title>
+<title>TP COmmande Numérique Directe: NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE/Core/Inc/main.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TP_AEI_BROCHOT_TAMBOISE
+   <div id="projectname">TP COmmande Numérique Directe
    </div>
   </td>
  </tr>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c6310732a22f63c0c2fc5595561e68f1.html">Core</a></li><li class="navelem"><a class="el" href="dir_e2489e887f17afa3cbc07a4ec152cdd2.html">Inc</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_f80a2127d588fbbfca71bdf36773afca.html">NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE</a></li><li class="navelem"><a class="el" href="dir_711d93e8e55d9d68533e0a8498104afd.html">Core</a></li><li class="navelem"><a class="el" href="dir_3b66cda0ecc6c7e96d1fd96b99bebd07.html">Inc</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -82,7 +82,8 @@ $(function() {
 
 <p>: Header for <a class="el" href="main_8c.html" title=": Main program body">main.c</a> file. This file contains the common defines of the application.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;stm32g4xx_hal.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="stm32g4xx__hal_8h_source.html">stm32g4xx_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="adc_8h_source.html">adc.h</a>&quot;</code><br />
 </div>
 <p><a href="main_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -95,7 +96,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BUTTON_GPIO_Port</b>&#160;&#160;&#160;GPIOC</td></tr>
 <tr class="separator:a337357b16ac6a539173b7bfc0857e3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a812bf63e26027e8a894bfc3ae8fda4bf"><td class="memItemLeft" align="right" valign="top"><a id="a812bf63e26027e8a894bfc3ae8fda4bf" name="a812bf63e26027e8a894bfc3ae8fda4bf"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BUTTON_EXTI_IRQn</b>&#160;&#160;&#160;EXTI15_10_IRQn</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BUTTON_EXTI_IRQn</b>&#160;&#160;&#160;<a class="el" href="group___peripheral__interrupt__number__definition.html#gga7e1129cd8a196f4284d41db3e82ad5c8a9fb0ad0c850234d1983fafdb17378e2f">EXTI15_10_IRQn</a></td></tr>
 <tr class="separator:a812bf63e26027e8a894bfc3ae8fda4bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e78d496ec394f28000df783f440359"><td class="memItemLeft" align="right" valign="top"><a id="a79e78d496ec394f28000df783f440359" name="a79e78d496ec394f28000df783f440359"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ISO_RESET_Pin</b>&#160;&#160;&#160;GPIO_PIN_3</td></tr>
@@ -121,6 +122,24 @@ Macros</h2></td></tr>
 <tr class="memitem:aa13afc64c30db4eed10d4747f962a5b0"><td class="memItemLeft" align="right" valign="top"><a id="aa13afc64c30db4eed10d4747f962a5b0" name="aa13afc64c30db4eed10d4747f962a5b0"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>T_SWCLK_GPIO_Port</b>&#160;&#160;&#160;GPIOA</td></tr>
 <tr class="separator:aa13afc64c30db4eed10d4747f962a5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc904c26a63ea0c36e5ca6d3911bd2d5"><td class="memItemLeft" align="right" valign="top"><a id="adc904c26a63ea0c36e5ca6d3911bd2d5" name="adc904c26a63ea0c36e5ca6d3911bd2d5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FREQ_SYST</b>&#160;&#160;&#160;170000000</td></tr>
+<tr class="separator:adc904c26a63ea0c36e5ca6d3911bd2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7110a6e55329c2ff9073f14b4df597c9"><td class="memItemLeft" align="right" valign="top"><a id="a7110a6e55329c2ff9073f14b4df597c9" name="a7110a6e55329c2ff9073f14b4df597c9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FREQ_ECH_SPEED</b>&#160;&#160;&#160;FREQ_SYST / TIM5-&gt;ARR</td></tr>
+<tr class="separator:a7110a6e55329c2ff9073f14b4df597c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c0700149eaeef65157495e7503f22a"><td class="memItemLeft" align="right" valign="top"><a id="ab8c0700149eaeef65157495e7503f22a" name="ab8c0700149eaeef65157495e7503f22a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NUMBER_OF_POINT</b>&#160;&#160;&#160;4096</td></tr>
+<tr class="separator:ab8c0700149eaeef65157495e7503f22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75bcee4b28157d51fa12c57a1a5d321a"><td class="memItemLeft" align="right" valign="top"><a id="a75bcee4b28157d51fa12c57a1a5d321a" name="a75bcee4b28157d51fa12c57a1a5d321a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>Kp</b>&#160;&#160;&#160;0.0002</td></tr>
+<tr class="separator:a75bcee4b28157d51fa12c57a1a5d321a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ccd383fe0d82309eac500d9bd3b825b"><td class="memItemLeft" align="right" valign="top"><a id="a6ccd383fe0d82309eac500d9bd3b825b" name="a6ccd383fe0d82309eac500d9bd3b825b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>Ki</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:a6ccd383fe0d82309eac500d9bd3b825b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a156e181d5d76e0ddd73ecc409ac9c3"><td class="memItemLeft" align="right" valign="top"><a id="a6a156e181d5d76e0ddd73ecc409ac9c3" name="a6a156e181d5d76e0ddd73ecc409ac9c3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>Te</b>&#160;&#160;&#160;1/16000.0</td></tr>
+<tr class="separator:a6a156e181d5d76e0ddd73ecc409ac9c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>

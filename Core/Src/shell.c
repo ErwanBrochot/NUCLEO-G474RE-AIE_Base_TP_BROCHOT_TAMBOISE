@@ -126,7 +126,11 @@ uint8_t shellGetChar(void){
 }
 
 /**
-  * @brief  Call function depends of the value of argc and argv
+  * @brief  Call function depends of the value of argc and argvz
+  * @note use the command "power on" to initialize the power module.
+  * use the "set current [float]" command to set the current value that you want.
+  * use the "measure current" command to display the current value.
+  * use the "measure speed" commande to display the speed of the motor.
   * @retval None
   */
 void shellExec(void){

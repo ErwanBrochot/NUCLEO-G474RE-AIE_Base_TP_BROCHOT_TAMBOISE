@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    shell.c
+ * @file    motor.c
  * @brief   This file provides code for motor control
  ******************************************************************************
  *  Created on: Nov 7, 2022
@@ -86,7 +86,9 @@ void setAlpha(int alpha1)
 }
 
 /**
- * @brief Set the duty cycle thanks to a PI regulation to match with the wanted value. It use a parallel PI regulation
+ * @brief Set the duty cycle thanks to a PI regulation to match with the wanted value.
+ * It use a parallel PI regulation
+ * @retval None
  */
 void asserCurrent (void)
 {

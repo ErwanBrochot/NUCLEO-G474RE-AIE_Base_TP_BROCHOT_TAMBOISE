@@ -183,9 +183,10 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 
-/*
- * void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
- * Met le flag a 1 quand le buffer est remli
+/**
+ * Change the value of the dmaFlag to high level when the ADC buffer is full
+ * @ param ADC_HandleTypeDef *hadc
+ * @retval None
  */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
@@ -196,14 +197,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 }
 
-/*
- * void meanADCValue (void)
- * calcule la tension moyenne hallVoltageValue obtenue sur les 10 valeurs présentent dans le Buffer
- * calcule le courant moyen hallCurrentValue grace a la tension moyenne hallVoltageValue
- * Taille du buffer: ADC_HALL_BUFFER
- * OFFSET_DEFAULT_ADC: A définir dans adc.h pour compenser une erreur d'offset dans l'ADC
- * HALL_GAIN: défini dans adc.h selon la datasheet du convertisseur.
- * VOLTAGE_HALL_OC: Tension dans le hall en circuit ouvert, définit dans adc.h selon la datasheet du convertisseur
+/**
+ * @brief Make the mean of the current value stocked in the buffer and stock it in the hallCurrentValue variable
+ * @note use the command "measure current" on the commandshell to display the current value
+ * @retval None
  */
 void meanADCValue (void)
 {

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TP_AEI_BROCHOT_TAMBOISE: Core/Inc/stm32g4xx_it.h File Reference</title>
+<title>TP COmmande Numérique Directe: NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE/Core/Inc/stm32g4xx_it.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TP_AEI_BROCHOT_TAMBOISE
+   <div id="projectname">TP COmmande Numérique Directe
    </div>
   </td>
  </tr>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c6310732a22f63c0c2fc5595561e68f1.html">Core</a></li><li class="navelem"><a class="el" href="dir_e2489e887f17afa3cbc07a4ec152cdd2.html">Inc</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_f80a2127d588fbbfca71bdf36773afca.html">NUCLEO-G474RE-AIE_Base_TP_BROCHOT_TAMBOISE</a></li><li class="navelem"><a class="el" href="dir_711d93e8e55d9d68533e0a8498104afd.html">Core</a></li><li class="navelem"><a class="el" href="dir_3b66cda0ecc6c7e96d1fd96b99bebd07.html">Inc</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -122,10 +122,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>PendSV_Handler</b> (v
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SysTick_Handler</b> (void)</td></tr>
 <tr class="memdesc:ab5e09814056d617c521549e542639b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles System tick timer. <br /></td></tr>
 <tr class="separator:ab5e09814056d617c521549e542639b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b6fac3d670a4860ebec8a961d5c4a73"><td class="memItemLeft" align="right" valign="top"><a id="a7b6fac3d670a4860ebec8a961d5c4a73" name="a7b6fac3d670a4860ebec8a961d5c4a73"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DMA1_Channel1_IRQHandler</b> (void)</td></tr>
+<tr class="memdesc:a7b6fac3d670a4860ebec8a961d5c4a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles DMA1 channel1 global interrupt. <br /></td></tr>
+<tr class="separator:a7b6fac3d670a4860ebec8a961d5c4a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ca6fd0e6f77921dd1123539857ba0a8"><td class="memItemLeft" align="right" valign="top"><a id="a0ca6fd0e6f77921dd1123539857ba0a8" name="a0ca6fd0e6f77921dd1123539857ba0a8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>USART2_IRQHandler</b> (void)</td></tr>
+<tr class="memdesc:a0ca6fd0e6f77921dd1123539857ba0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles USART2 global interrupt / USART2 wake-up interrupt through EXTI line 26. <br /></td></tr>
+<tr class="separator:a0ca6fd0e6f77921dd1123539857ba0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a738473a5b43f6c92b80ce1d3d6f77ed9"><td class="memItemLeft" align="right" valign="top"><a id="a738473a5b43f6c92b80ce1d3d6f77ed9" name="a738473a5b43f6c92b80ce1d3d6f77ed9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EXTI15_10_IRQHandler</b> (void)</td></tr>
 <tr class="memdesc:a738473a5b43f6c92b80ce1d3d6f77ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles EXTI line[15:10] interrupts. <br /></td></tr>
 <tr class="separator:a738473a5b43f6c92b80ce1d3d6f77ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e66446caf21dd90191dc07a13ce2378"><td class="memItemLeft" align="right" valign="top"><a id="a5e66446caf21dd90191dc07a13ce2378" name="a5e66446caf21dd90191dc07a13ce2378"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TIM5_IRQHandler</b> (void)</td></tr>
+<tr class="memdesc:a5e66446caf21dd90191dc07a13ce2378"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles TIM5 global interrupt. <br /></td></tr>
+<tr class="separator:a5e66446caf21dd90191dc07a13ce2378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0839a45f331c4c067939b9c4533bbf4d"><td class="memItemLeft" align="right" valign="top"><a id="a0839a45f331c4c067939b9c4533bbf4d" name="a0839a45f331c4c067939b9c4533bbf4d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>TIM6_DAC_IRQHandler</b> (void)</td></tr>
 <tr class="memdesc:a0839a45f331c4c067939b9c4533bbf4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function handles TIM6 global interrupt, DAC1 and DAC3 channel underrun error interrupts. <br /></td></tr>

@@ -3,4 +3,4 @@
 ../Core/Src/usart.c:95:6:HAL_UART_MspInit	128	static
 ../Core/Src/usart.c:139:6:HAL_UART_MspDeInit	16	static
 ../Core/Src/usart.c:168:6:uartPrintADCValue	8	static
-../Core/Src/usart.c:176:6:uartPrintSpeed	16	static
+../Core/Src/usart.c:179:6:uartPrintSpeed	16	static

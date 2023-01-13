@@ -207,6 +207,9 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+ * @brief Use the interruption on the blue Button to lunch the power module according to the datasheet
+ */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin== BUTTON_Pin)
@@ -224,6 +227,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  * @note   This function is called  when TIM6 interrupt took place, inside
  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
  * a global variable "uwTick" used as application time base.
+ * @note This function is called  when TIM5 interrupt took place, inside
+ * HAL_TIM_IRQHandler(). It makes a measure of the incremental encoder wired to TIM3 and put the counter on the middle value for the next measure
  * @param  htim : TIM handle
  * @retval None
  */

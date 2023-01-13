@@ -2,4 +2,4 @@
 ../Core/Src/motor.c:62:6:motorPowerOff	8	static
 ../Core/Src/motor.c:72:6:motorSetSpeed	16	static
 ../Core/Src/motor.c:82:6:setAlpha	16	static
-../Core/Src/motor.c:91:6:asserCurrent	24	static
+../Core/Src/motor.c:92:6:asserCurrent	24	static

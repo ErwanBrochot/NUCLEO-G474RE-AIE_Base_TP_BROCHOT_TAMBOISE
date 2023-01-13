@@ -162,8 +162,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
-/*
- *  Permet d'afficher la tension dans le capteur a effet hall et le courant dans le moteur
+/**
+ *  @brief Allow to display the current value of the motor using the USART bus
  */
 void uartPrintADCValue(void)
 {
@@ -173,6 +173,9 @@ void uartPrintADCValue(void)
 
 }
 
+/**
+ *  @brief Allow to display the speed value of the motor using the USART bus
+ */
 void uartPrintSpeed(void)
 {
 	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
