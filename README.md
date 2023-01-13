@@ -38,7 +38,7 @@ Générer quatre PWM à partir du Timer 1 pour controler le hacheur.
 - Résolution minimum : 10bits.
 
 #### Reglage du Timer 1
-L'hologe du système est de 170 MHz et on souhaite un timer d'une fréquence de
+L'horloge du système est de 170 MHz et on souhaite un timer d'une fréquence de
 16 kHz. On va donc avoir un ARR=170x10^6/16x10^3-1=10624. Comme le Timer est réglé
 en center align, on divise cette valeur par 2 ce qui fait que ARR=5311.
 
@@ -188,12 +188,77 @@ Nous observons ici que notre temps mort est de plus de 2us, nous respectons donc
 
 ### Mesure de courant 
 
-Pour mesurer le courant nous allons utiliser un ADC en mode DMA qui sera connecté a un des capteurs à effet Hall présent sur le hacheur. L'ADC sera cadencé par le Timer 2 qui aura une fréquence de 16kHz. Le DMA remplira un Buffer de 10 valeur et nous ferons la moyenne du courant sur ces 10 valeurs pour avoir notre courant moyen. Cette démarche évite de prendre une mesure de courant erronées, car le courant passant dans le moteur comporte de très grandes variations ,et celles-ci pourront nous géner lors de notre asservissement.
+Pour mesurer le courant nous allons utiliser un ADC en mode DMA qui sera connecté a un des capteurs à effet Hall présent sur le hacheur. L'ADC sera cadencé par le Timer 2 qui aura une fréquence de 160kHz. Le DMA remplira un Buffer de 10 valeur et nous ferons la moyenne du courant sur ces 10 valeurs pour avoir notre courant moyen. Cette démarche évite de prendre une mesure de courant erronées, car le courant passant dans le moteur comporte de très grandes variations ,et celles-ci peuvent nous géner lors de notre asservissement.
 
 #### Paramètres ADC
 
 ![ADC setting1](./Images/ADC_param.png "Paramètres de l'ADC")
 ![ADC setting2](./Images/ADC_param1.png "Paramètres de l'ADC")
+
+####Fonctions liées à l'ADC
+
+Pour se servir de l'ADC en mode DMA, il faut récuperer la fonction HAL_ADC_ConvCpltCallback. Cette fonction met un flag à 1 quand le buffer de l'ADC est rempli:
+
+```c
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+  if (hadc == &hadc1)
+  {
+	  adcDMAflag=1;
+  }
+
+}
+
+```
+
+Nous avons ensuite codé une fonction qui calcule la moyenne des 10 valeurs présentes dans le buffer pré-rempli par le DMA:
+
+```c
+void meanADCValue (void)
+{
+	int i;
+	int sum=0;
+	if (adcDMAflag==1)
+	{
+		for (i=0; i<ADC_HALL_BUFFER; i=i+1)
+		{
+			sum=sum+ adcBuffer[i];
+		}
+
+		hallVoltageValue= ((sum/ADC_HALL_BUFFER)*3.3/4096.0)+OFFSET_DEFAULT_ADC;
+		hallCurrentValue= (hallVoltageValue-VOLTAGE_HALL_OC)*HALL_GAIN;
+
+	}
+}
+```
+
+Nous avons aussi codé une fonction nous permettons d'afficher la valeur du courant sur le commandShell  grâce à la commande "measure current":
+
+```c
+void uartPrintADCValue(void)
+{
+	meanADCValue();
+	sprintf(uartTxBuffer,"Current: %.2f A\r\n",hallCurrentValue);
+	HAL_UART_Transmit(&huart2, uartTxBuffer, sizeof(uartTxBuffer), HAL_MAX_DELAY);
+
+}
+```
+Le commandShell a été modifié pour interpréter la commande "measure Current" et lancer la fonction uartPrintADCValue.
+
+### Mesure de Vitesse
+
+Pour mesurer la vitesse, nous allons utiliser les roues codeuses présentent sur les MCC, Il y'as 2 roues de 1024 segments, nous allons compter les fronts montants et déscendants, nous avons donc 4096 points sur un tour.
+
+Nous allons utiliser le Timer3 en mode counter pour compter les incréments sur les roues codeuses. Nous utiliserons le Timer5 pour venir récupérer la valeur du codeur à une fréquence de 10Hz
+
+#### Paramètres des Timers
+##### Timer 3: Mode Counter
+
+![Counter setting](./Images/TIM3_param.png "TIM3 setting")
+
+##### Timer 5: Mode Interruption
+
+![Counter setting](./Images/TIM5_param.png "TIM5 setting")
 
 
 ## Author
