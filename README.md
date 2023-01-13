@@ -71,10 +71,10 @@ Ce hacheur comporte 3 bras de ponts, nous n'en utiliserons que 2 pour commander 
 
 En suivant la datasheet du hacheur et les pins utilisés sur notre Nucléo. Nous avons établi les connections de telle manière:
 
-|Signal|Pin STM32|Pin hacheur|Correspondance hacheur
------------------------------------------------------
+|Signal|Pin STM32|Pin hacheur|Correspondance hacheur|
+|------|---------|-----------|----------------------|
 |TIM1_CH1|PA8|Pin 12|CM_Y_TOP|
--------------------------------
+|--------|---|------|--------|
 
 
 
