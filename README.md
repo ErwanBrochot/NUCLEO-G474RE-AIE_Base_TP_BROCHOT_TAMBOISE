@@ -44,9 +44,18 @@ en center align, on divise cette valeur par 2 ce qui fait que ARR=5311.
 
 ![Counter setting](./Images/TIM1_param.png "Counter setting")
 
-![Dead time](./Images/TIM1_DeadTime.png "deadtime setting")
+![Dead time](./Images/TIM_DeadTime.png "deadtime setting")
 
 ![PWM setting](./Images/TIM1_PWM.png "PWM setting")
+
+#### Observation a l'oscilloscope
+![Oscillo_PWM](./Images/Ocsillo_PWM.png "PWM affichés à l'oscilloscope")
+
+Nos PWM sont bien a 16KHz et complémentaires.
+
+![Oscillo_DeadTime](./Images/Ocsillo_temps_mort.png "Temps mort")
+
+Il y'as bien un temps mort de 2us entre chaques commutations.
 
 
 ## Authors
