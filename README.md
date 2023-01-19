@@ -646,6 +646,29 @@ Nous avons tracé la réponse en courant et en vitesse à un échelon de 1500tr/
 
 Observations: On peut voir ici que au démarage notre courant est bien saturé a IMAX pce qui nous permet d' avoir une accélération constante et une fois proche de notre vitesse de consigne, le courant baisse afin de stabiliser la vitesse a 1500 tr/min.
 
+## Commande de Test
+
+### Test Asservissemment Courant:
+Commandes à lancer:
+
+- power on
+- mode 1
+- set current [float]
+
+### Test Asservissement Vitesse :
+Commandes à lancer:
+
+- power on
+- mode 2
+- set speed [float]
+
+### Test set Alpha:
+Commande à lancer:
+
+- power on
+- set alpha [int]
+
+
 ## Author
 
 - [@Erwan Brochot](https://github.com/ErwanBrochot/)
