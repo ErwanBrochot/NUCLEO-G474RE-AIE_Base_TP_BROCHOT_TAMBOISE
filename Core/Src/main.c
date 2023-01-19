@@ -153,8 +153,7 @@ int main(void)
 			if (adcDMAflag)
 			{
 				if (startFlag){
-					asserCurrent(); //Decommenter pour l'asservissement en courant
-				}
+					asserCurrent();
 				adcDMAflag=0;
 			}
 			break;
@@ -162,14 +161,14 @@ int main(void)
 			if (adcDMAflag)
 			{
 				if (startFlag){
-					asserCurrent(); //Decommenter pour l'asservissement en courant
+					asserCurrent();
 				}
 				adcDMAflag=0;
 			}
 			if (speedFlag)
 			{
 				if (startFlag){
-					asserSpeed();  //Décommenter pour l'asser en vitesse
+					asserSpeed();
 				}
 				speedFlag=0;
 			}
