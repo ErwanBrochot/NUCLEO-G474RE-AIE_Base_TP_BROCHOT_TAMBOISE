@@ -474,8 +474,177 @@ Avec cette modification, nous pouvons régler le courant souhaité via la comman
 
 Nous allons utiliser une régulation PI parrallèle pour mettre en place notre asservissement en vitesse. Pour se faire, nous devons calculer notre courant de référence selon le gain proportionnel et notre courant de référence selon le gain intégral. Nous devons veiller a ce que notre courant de référence ne dépasse pas 7A et que l'intégrale prenne en compte l'anti-windup.
 
+```c
+void asserSpeed (void)
+{
+	calcSpeed();
+	float eps= consignSpeed - speed;
+
+	// Proportional part
+	if (KpSpeed*eps < -IMAX){
+		currentKp=-IMAX;
+	}
+	else if (KpSpeed*eps > IMAX) {
+		currentKp=IMAX;
+	}
+	else {
+		currentKp=eps*(float)KpSpeed;
+	}
+
+	// Integral part
+
+	currentKi=currentKiOld+((KiSpeed*TeSpeed)/2)*(eps+speedEpsOld);
+	if (currentKi < -IMAX){
+		currentKi=-IMAX;
+	}
+	else if (currentKi > IMAX) {
+		currentKi=IMAX;
+	}
+
+	currentKiOld=currentKi;
+	speedEpsOld=eps;
+
+	// Summ of the two coeff
+
+	consignCurrent=(float)(currentKi+currentKp);
+
+	if (consignCurrent < -IMAX){
+		consignCurrent=-IMAX;
+	}
+	else if (consignCurrent > IMAX) {
+		consignCurrent=IMAX;
+	}
+}
+```
+Nous avons ensuite modifié le Shell pour pouvoir choisir entre l'asservissement en courant ou en vitesse grâce à la commande "mode [int]" avec 1 pour un asservissement en courant et 2 pour un asservissement en tension.
+
+```c
+void shellExec(void){
+	if(strcmp(argv[0],"set")==0){
+		if(strcmp(argv[1],"PA5")==0 && ((strcmp(argv[2],"0")==0)||(strcmp(argv[2],"1")==0)) ){
+			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, atoi(argv[2]));
+			stringSize = snprintf((char*)uartTxBuffer,UART_TX_BUFFER_SIZE,"Switch on/off led : %d\r\n",atoi(argv[2]));
+			HAL_UART_Transmit(&huart2, uartTxBuffer, stringSize, HAL_MAX_DELAY);
+		}
+		else if(strcmp(argv[1],"speed")==0){
+			consignSpeed= (atof(argv[2]));
+		}
+		else if(strcmp(argv[1],"alpha")==0){
+			setAlpha(atoi(argv[2]));
+		}
+		else if(strcmp(argv[1],"current")==0){
+			consignCurrent=(atof(argv[2]));
+
+		}
+		else{
+			shellCmdNotFound();
+		}
+	}
+	else if (strcmp(argv[0],"measure")==0)
+	{
+		if(strcmp(argv[1],"current")==0){
+			uartPrintADCValue();
+		}
+		else if (strcmp(argv[1],"speed")==0){
+			uartPrintSpeed();
+		}
+
+	}
+	else if (strcmp(argv[0],"mode")==0)
+	{
+		chooseModeFlag= atoi(argv[1]);
+
+	}
+	else if(strcmp(argv[0],"help")==0)
+	{
+		HAL_UART_Transmit(&huart2, help, sizeof(help), HAL_MAX_DELAY);
+	}
+	else if(strcmp(argv[0],"pinout")==0)
+	{
+		HAL_UART_Transmit(&huart2, pinout, sizeof(pinout), HAL_MAX_DELAY);
+	}
+	else if((strcmp(argv[0],"power")==0)&&(strcmp(argv[1],"on")==0))
+	{
+		HAL_UART_Transmit(&huart2, powerOn, sizeof(powerOn), HAL_MAX_DELAY);
+		motorPowerOn();
+	}
+	else if((strcmp(argv[0],"power")==0)&&(strcmp(argv[1],"off")==0))
+	{
+		HAL_UART_Transmit(&huart2, powerOff, sizeof(powerOff), HAL_MAX_DELAY);
+		motorPowerOff();
+	}
+	else{
+		shellCmdNotFound();
+	}
+}
+```
+Nous avons ensuite ajouté un flage qui se positionne à 1 quand on entre dans l'interruption du TIM5 afin de cadencer notre asservissement de vitesse à 10Hz.
+
+```c
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	/* USER CODE BEGIN Callback 0 */
+
+
+	/* USER CODE END Callback 0 */
+	if (htim->Instance == TIM6) {
+		HAL_IncTick();
+	}
+	/* USER CODE BEGIN Callback 1 */
+	else if (htim->Instance == TIM5){
+		codeurValue= TIM3->CNT;
+		TIM3->CNT = TIM3->ARR/2;
+		speedFlag=1;
+	}
+	/* USER CODE END Callback 1 */
+}
+```
+
+Notre super loop finale qui nous permet de lancer nos asservissement est la suivante:
+```c
+	while (1)
+	{
+		// SuperLoop inside the while(1), only flag changed from interrupt could launch functions
+		if(uartRxReceived){
+			if(shellGetChar()){
+				shellExec();
+				shellPrompt();
+			}
+			uartRxReceived = 0;
+		}
+		switch (chooseModeFlag){
+		case 1:
+			if (adcDMAflag)
+			{
+				if (startFlag){
+					asserCurrent();
+				adcDMAflag=0;
+			}
+			break;
+		case 2:
+			if (adcDMAflag)
+			{
+				if (startFlag){
+					asserCurrent();
+				}
+				adcDMAflag=0;
+			}
+			if (speedFlag)
+			{
+				if (startFlag){
+					asserSpeed();
+				}
+				speedFlag=0;
+			}
+			break;
+		}
+```
+
+Nous avons tracé la réponse en courant et en vitesse à un échelon de 1500tr/min:
 
 ![Step_Response_Speed](./Images/Réponse_echelon_vitesse.png "Réponse à un échelon de vitesse")
+
+Observations: On peut voir ici que au démarage notre courant est bien saturé a IMAX pce qui nous permet d' avoir une accélération constante et une fois proche de notre vitesse de consigne, le courant baisse afin de stabiliser la vitesse a 1500 tr/min.
 
 ## Author
 
