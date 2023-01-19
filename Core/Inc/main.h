@@ -76,6 +76,11 @@ void Error_Handler(void);
 #define Kp 0.0002
 #define Ki 3
 #define Te 1/16000.0
+
+#define KpSpeed 0.01
+#define KiSpeed 0.03
+#define IMAX 7
+#define TeSpeed 1.0/10.0
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

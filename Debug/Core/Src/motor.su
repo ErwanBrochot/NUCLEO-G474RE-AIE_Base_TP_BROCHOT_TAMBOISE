@@ -1,6 +1,7 @@
-../Core/Src/motor.c:34:6:motorPowerOn	16	static
-../Core/Src/motor.c:64:6:motorPowerOff	8	static
-../Core/Src/motor.c:74:6:motorSetSpeed	16	static
-../Core/Src/motor.c:84:6:setAlpha	16	static
-../Core/Src/motor.c:95:6:asserCurrent	24	static
-../Core/Src/motor.c:139:6:calcSpeed	16	static
+../Core/Src/motor.c:42:6:motorPowerOn	16	static
+../Core/Src/motor.c:74:6:calcSpeed	16	static
+../Core/Src/motor.c:82:6:motorPowerOff	8	static
+../Core/Src/motor.c:92:6:motorSetSpeed	16	static
+../Core/Src/motor.c:102:6:setAlpha	16	static
+../Core/Src/motor.c:113:6:asserCurrent	24	static
+../Core/Src/motor.c:157:6:asserSpeed	24	static

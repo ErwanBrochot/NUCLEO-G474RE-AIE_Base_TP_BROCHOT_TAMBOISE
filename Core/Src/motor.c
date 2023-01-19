@@ -24,8 +24,16 @@ float alphaKiOld=0.5;
 int alpha=50;
 float eps=0.0;
 float epsOld=0.0;
+
 extern float speed;
 extern int codeurValue;
+
+float currentKp=0.0;
+float currentKi=0.0;
+float currentKiOld=0.5;
+float speedEps=0.0;
+float speedEpsOld=0.0;
+extern float consignSpeed;
 
 /**
  * @brief  Switch on the motor driver
@@ -50,6 +58,8 @@ void motorPowerOn(void){
 	HAL_GPIO_WritePin(ISO_RESET_GPIO_Port, ISO_RESET_Pin, GPIO_PIN_RESET);
 
 	consignCurrent=0;
+	consignSpeed=0;
+	currentKiOld=0;
 	startFlag=1;
 	alphaKiOld=0.5;
 	epsOld=0;
@@ -58,12 +68,20 @@ void motorPowerOn(void){
 }
 
 /**
+ * @brief  Calculation of the speed.
+ * @retval None
+ */
+void calcSpeed (void){
+	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
+}
+
+/**
  * @brief  Switch off the motor driver
  * @retval None
  */
 void motorPowerOff(void){
 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin); // just for test, you can delete it
-	startFlag=0;
+	consignCurrent=0.0;
 }
 
 /**
@@ -136,6 +154,45 @@ void asserCurrent (void)
 
 }
 
-void calcSpeed (void){
-	speed=(codeurValue-((TIM3->ARR)/2.0))*FREQ_ECH_SPEED*60.0/NUMBER_OF_POINT;
+void asserSpeed (void)
+{
+	calcSpeed();
+	float eps= consignSpeed - speed;
+
+	// Proportional part
+	if (KpSpeed*eps < -IMAX){
+		currentKp=-IMAX;
+	}
+	else if (KpSpeed*eps > IMAX) {
+		currentKp=IMAX;
+	}
+	else {
+		currentKp=eps*(float)KpSpeed;
+	}
+
+	// Integral part
+
+	currentKi=currentKiOld+((KiSpeed*TeSpeed)/2)*(eps+speedEpsOld);
+	if (currentKi < -IMAX){
+		currentKi=-IMAX;
+	}
+	else if (currentKi > IMAX) {
+		currentKi=IMAX;
+	}
+
+	currentKiOld=currentKi;
+	speedEpsOld=eps;
+
+	// Summ of the two coeff
+
+	consignCurrent=(float)(currentKi+currentKp);
+
+	if (consignCurrent < -IMAX){
+		consignCurrent=-IMAX;
+	}
+	else if (consignCurrent > IMAX) {
+		consignCurrent=IMAX;
+	}
 }
+
+

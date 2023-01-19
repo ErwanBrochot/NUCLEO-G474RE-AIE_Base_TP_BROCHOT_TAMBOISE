@@ -61,10 +61,13 @@ extern uint32_t adcBuffer[ADC_HALL_BUFFER];
 
 float speed=0.0;
 float consignCurrent = 0.0;
+float consignSpeed=0.0;
 
 extern int adcDMAflag;
 int codeurValue=0;
 int startFlag=0;
+int speedFlag=0;
+int chooseModeFlag=0;
 
 
 
@@ -145,13 +148,34 @@ int main(void)
 			}
 			uartRxReceived = 0;
 		}
-		if (adcDMAflag)
-		{
-			if (startFlag){
-				asserCurrent();
+		switch (chooseModeFlag){
+		case 1:
+			if (adcDMAflag)
+			{
+				if (startFlag){
+					asserCurrent(); //Decommenter pour l'asservissement en courant
+				}
+				adcDMAflag=0;
 			}
-			adcDMAflag=0;
+			break;
+		case 2:
+			if (adcDMAflag)
+			{
+				if (startFlag){
+					asserCurrent(); //Decommenter pour l'asservissement en courant
+				}
+				adcDMAflag=0;
+			}
+			if (speedFlag)
+			{
+				if (startFlag){
+					asserSpeed();  //Décommenter pour l'asser en vitesse
+				}
+				speedFlag=0;
+			}
+			break;
 		}
+
 
 
 		/* USER CODE END WHILE */
@@ -245,6 +269,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	else if (htim->Instance == TIM5){
 		codeurValue= TIM3->CNT;
 		TIM3->CNT = TIM3->ARR/2;
+		speedFlag=1;
 	}
 	/* USER CODE END Callback 1 */
 }

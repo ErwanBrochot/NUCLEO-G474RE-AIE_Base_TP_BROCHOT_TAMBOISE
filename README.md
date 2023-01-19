@@ -55,7 +55,7 @@ en center align, on divise cette valeur par 2 ce qui fait que ARR=5311.
 
 #### Observation a l'oscilloscope
 
-#####Observations
+##### Observations
 
 ![Oscillo PWM](./Images/Oscillo_PWM.png "PWM affichés à l'oscilloscope")
 
@@ -78,6 +78,9 @@ En suivant la datasheet du hacheur et les pins utilisés sur notre Nucléo. Nous
 |TIM1_CH2|PA9|Pin 13|CM_R_TOP|
 |TIM1_CH2N|PA12|Pin 31|CM_R_BOT|
 |ISO_RESET|PC3|Pin 33 |ISO_RESET|
+|ADC1_IN1|PA0|Pin 16|Y_HALL|
+|TIM3_CH1|PA6|Voie A|CODEUR VOIE A|
+|TIM3_CH2|PA4|Voie B|CODEUR VOIE B|
 
 ### Commande powerOn
 
@@ -466,6 +469,13 @@ void shellExec(void){
 ```
 
 Avec cette modification, nous pouvons régler le courant souhaité via la commande set current suivit de la valeur de type float souhaitée.
+
+### Asservissement de Vitesse
+
+Nous allons utiliser une régulation PI parrallèle pour mettre en place notre asservissement en vitesse. Pour se faire, nous devons calculer notre courant de référence selon le gain proportionnel et notre courant de référence selon le gain intégral. Nous devons veiller a ce que notre courant de référence ne dépasse pas 7A et que l'intégrale prenne en compte l'anti-windup.
+
+
+
 ## Author
 
 - [@Erwan Brochot](https://github.com/ErwanBrochot/)
