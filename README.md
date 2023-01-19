@@ -475,6 +475,7 @@ Avec cette modification, nous pouvons régler le courant souhaité via la comman
 Nous allons utiliser une régulation PI parrallèle pour mettre en place notre asservissement en vitesse. Pour se faire, nous devons calculer notre courant de référence selon le gain proportionnel et notre courant de référence selon le gain intégral. Nous devons veiller a ce que notre courant de référence ne dépasse pas 7A et que l'intégrale prenne en compte l'anti-windup.
 
 
+![Step_Response_Speed](./Images/Réponse_echelon_vitesse.png "Réponse à un échelon de vitesse")
 
 ## Author
 
