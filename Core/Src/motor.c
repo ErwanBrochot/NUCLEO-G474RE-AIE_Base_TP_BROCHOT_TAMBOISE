@@ -154,6 +154,11 @@ void asserCurrent (void)
 
 }
 
+/**
+ * @brief Set the reference current thanks to a PI regulation to match with the wanted value.
+ * It use a parallel PI regulation
+ * @retval None
+ */
 void asserSpeed (void)
 {
 	calcSpeed();

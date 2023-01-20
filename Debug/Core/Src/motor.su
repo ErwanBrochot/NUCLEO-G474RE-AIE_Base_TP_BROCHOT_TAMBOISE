@@ -4,4 +4,4 @@
 ../Core/Src/motor.c:92:6:motorSetSpeed	16	static
 ../Core/Src/motor.c:102:6:setAlpha	16	static
 ../Core/Src/motor.c:113:6:asserCurrent	24	static
-../Core/Src/motor.c:157:6:asserSpeed	24	static
+../Core/Src/motor.c:162:6:asserSpeed	24	static

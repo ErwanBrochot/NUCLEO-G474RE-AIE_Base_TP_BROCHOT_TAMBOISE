@@ -130,7 +130,12 @@ uint8_t shellGetChar(void){
 /**
  * @brief  Call function depends of the value of argc and argvz
  * @note use the command "power on" to initialize the power module.
- * use the "set current [float]" command to set the current value that you want.
+ * then use command "mode 1" to switch to the current regulation mode.
+ * Or use command "mode 2" to switch to the speed regulation mode.
+ * if you didn't have enter on of theses two command, the default mode is set alpha.
+ * in default mode: use "set alpha [int] with a value between 0 and 100 to change the alpha value.
+ * in mode 1 :use the "set current [float]" command to set the current value that you want.
+ * in mode 2: use the "set speed [float]" command to set the speed value in RPM wanted.
  * use the "measure current" command to display the current value.
  * use the "measure speed" commande to display the speed of the motor.
  * @retval None

@@ -2,4 +2,4 @@
 ../Core/Src/shell.c:81:6:shellPrompt	8	static
 ../Core/Src/shell.c:89:6:shellCmdNotFound	8	static
 ../Core/Src/shell.c:97:9:shellGetChar	16	static
-../Core/Src/shell.c:138:6:shellExec	8	static
+../Core/Src/shell.c:143:6:shellExec	8	static

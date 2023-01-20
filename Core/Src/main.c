@@ -154,9 +154,9 @@ int main(void)
 			{
 				if (startFlag){
 					asserCurrent();
-				adcDMAflag=0;
-			}
-			break;
+					adcDMAflag=0;
+				}
+				break;
 		case 2:
 			if (adcDMAflag)
 			{
@@ -173,6 +173,7 @@ int main(void)
 				speedFlag=0;
 			}
 			break;
+			}
 		}
 
 

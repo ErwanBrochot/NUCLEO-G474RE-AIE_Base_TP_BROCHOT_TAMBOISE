@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0002ab68  00000000  00000000  00043b80  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001bb38  00000000  00000000  0006e6e8  2**0
+ 17 .debug_line   0001bb40  00000000  00000000  0006e6e8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    001141cc  00000000  00000000  0008a220  2**0
+ 18 .debug_str    001141cc  00000000  00000000  0008a228  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  0019e3ec  2**0
+ 19 .comment      00000050  00000000  00000000  0019e3f4  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00007610  00000000  00000000  0019e43c  2**2
+ 20 .debug_frame  00007610  00000000  00000000  0019e444  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2149,22 +2149,21 @@ int main(void)
  8001596:	4b20      	ldr	r3, [pc, #128]	; (8001618 <main+0x120>)
  8001598:	681b      	ldr	r3, [r3, #0]
  800159a:	2b00      	cmp	r3, #0
- 800159c:	d024      	beq.n	80015e8 <main+0xf0>
+ 800159c:	d0e4      	beq.n	8001568 <main+0x70>
 			{
 				if (startFlag){
  800159e:	4b1f      	ldr	r3, [pc, #124]	; (800161c <main+0x124>)
  80015a0:	681b      	ldr	r3, [r3, #0]
  80015a2:	2b00      	cmp	r3, #0
- 80015a4:	d001      	beq.n	80015aa <main+0xb2>
-					asserCurrent(); //Decommenter pour l'asservissement en courant
+ 80015a4:	d020      	beq.n	80015e8 <main+0xf0>
+					asserCurrent();
  80015a6:	f000 f9bb 	bl	8001920 <asserCurrent>
-				}
-				adcDMAflag=0;
+					adcDMAflag=0;
  80015aa:	4b1b      	ldr	r3, [pc, #108]	; (8001618 <main+0x120>)
  80015ac:	2200      	movs	r2, #0
  80015ae:	601a      	str	r2, [r3, #0]
-			}
-			break;
+				}
+				break;
  80015b0:	e01a      	b.n	80015e8 <main+0xf0>
 		case 2:
 			if (adcDMAflag)
@@ -2178,7 +2177,7 @@ int main(void)
  80015bc:	681b      	ldr	r3, [r3, #0]
  80015be:	2b00      	cmp	r3, #0
  80015c0:	d001      	beq.n	80015c6 <main+0xce>
-					asserCurrent(); //Decommenter pour l'asservissement en courant
+					asserCurrent();
  80015c2:	f000 f9ad 	bl	8001920 <asserCurrent>
 				}
 				adcDMAflag=0;
@@ -2197,7 +2196,7 @@ int main(void)
  80015d6:	681b      	ldr	r3, [r3, #0]
  80015d8:	2b00      	cmp	r3, #0
  80015da:	d001      	beq.n	80015e0 <main+0xe8>
-					asserSpeed();  //Décommenter pour l'asser en vitesse
+					asserSpeed();
  80015dc:	f000 fa7c 	bl	8001ad8 <asserSpeed>
 				}
 				speedFlag=0;
@@ -2207,7 +2206,7 @@ int main(void)
 			}
 			break;
  80015e6:	e001      	b.n	80015ec <main+0xf4>
-			break;
+				break;
  80015e8:	bf00      	nop
  80015ea:	e7bd      	b.n	8001568 <main+0x70>
 			break;
@@ -2912,7 +2911,10 @@ void asserCurrent (void)
  8001ad4:	20000004 	.word	0x20000004
 
 08001ad8 <asserSpeed>:
-
+ * @brief Set the reference current thanks to a PI regulation to match with the wanted value.
+ * It use a parallel PI regulation
+ * @retval None
+ */
 void asserSpeed (void)
 {
  8001ad8:	b5b0      	push	{r4, r5, r7, lr}
@@ -3325,7 +3327,7 @@ uint8_t shellGetChar(void){
  8001de4:	20000380 	.word	0x20000380
 
 08001de8 <shellExec>:
- * use the "set current [float]" command to set the current value that you want.
+ * in mode 2: use the "set speed [float]" command to set the speed value in RPM wanted.
  * use the "measure current" command to display the current value.
  * use the "measure speed" commande to display the speed of the motor.
  * @retval None
